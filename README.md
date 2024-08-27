@@ -5,7 +5,8 @@ Using Apache Beam to custom Dataflow ingestion service.
 Ingesting files, changing all data types into string and writing into BigQuery.
 
 ## Architecture
-### Simple Use Cases 
+### Simple Use Cases
+Custom beam data pipeline without Dataflow template  
 ![architecture_simple_use_case](images/architecture_simple_use_case.jpg)
 
 ## Environment configuration
@@ -33,19 +34,18 @@ gcloud auth application-default login
 ## Related services
 ### Cloud Storage
 Store Dataflow staging files and template files
-- BUCKET_NAME: `solution-data-ingestion-by-dataflow`
+- BUCKET NAME: `solution-data-ingestion-by-dataflow`
 
 ### Dataflow
 Data pipeline jobs with parameters(pipeline options) and job information
-- beamapp-<username>-uuid()
+- JOB NAME: beamapp-`<username>`-uuid()
 
 ### BigQuery
 Destination table in BigQuery
 - DATASET NAME: `solution_data_ingestion_by_dataflow`
-- TABLE NAME: `csv_output`
 
 ## How to use
-### 1. Enviornment variables
+### 1. Environment variables
 ```
 export DATAFLOW_REGION=asia-east1
 export PROJECT_ID=tw-rd-de-data-solution
@@ -64,8 +64,8 @@ List of mock data:
 ### 3. Simple Use Cases: Using command line
 Parameters:
 - project: Your project id 
-- region: Your service built region
-- input: Your file path
+- region: The region your pipeline service built in
+- input: Your source file path
 - output: BigQuery table name compiled with 'dataset.table' or 'project:dataset.table' pattern
 - schema(optional): BigQuery table schema compiled with 'column1:datatype1,column2:datatyp2e' pattern
 - runner: 'DataflowRunner' or 'DirectRunner' (more info: https://beam.apache.org/get-started/wordcount-example/#direct-runner)
@@ -83,6 +83,9 @@ python pipeline.py \
     --temp_location gs://$BUCKET_NAME/tmp/
 ```
 
-## Visualization
+## Output results
 ### Simple Use Cases 
+1. Dataflow job detail
 ![dataflow_simple_use_case](images/dataflow_demo_simple_use_case.jpg)
+2. BigQuery data preview
+![bigquery_simple_use_case](images/bigquery_demo_simple_use_case.jpg)
