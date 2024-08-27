@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "data-ingestion"
+version = "0.1.0"
+description = ""
+authors = ["Finn"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+wheel = "^0.44.0"
+google-auth = "^2.34.0"
+apache-beam = {extras = ["dataframe", "gcp"], version = "^2.58.1"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
