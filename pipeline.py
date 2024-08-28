@@ -1,4 +1,5 @@
 import re
+from pydantic import BaseModel, ValidationError, Field
 import apache_beam as beam
 from apache_beam.io.textio import ReadFromCsv, ReadFromJson
 from apache_beam.io.parquetio import ReadFromParquet
@@ -15,6 +16,10 @@ class CustomOptions(PipelineOptions):
         parser.add_argument("--schema", required=False)
 
 
+class InputFormatSettings(BaseModel):
+    filename: str = Field(pattern=r".*\.(csv|json|txt|parquet)$")
+
+
 class ConvertTupledToDict(beam.DoFn):
     def process(self, element):
         if not isinstance(element, dict):
@@ -29,30 +34,41 @@ class DataIngestionDataflow:
         self.options = options
 
     def run(self):
-        # Run the data pipeline with pipeline options.
-        # Current supported input format: CSV, JSON(Newline), Parquet
-        with beam.Pipeline(options=self.options) as pipeline:
-            if re.match(".*\.csv$", self.options.input):
-                read_stage = pipeline | "Read CSV" >> ReadFromCsv(options.input)
-            elif re.match(".*(json|txt)$", self.options.input):
-                read_stage = pipeline | "Read JSON" >> ReadFromJson(options.input)
-            elif re.match(".*\.parquet$", self.options.input):
-                read_stage = pipeline | "Read Parquet" >> ReadFromParquet(options.input)
-            else:
-                raise ValueError(f"Unsupported input format")
-
-            (
-                read_stage
-                | "Change all data types into string"
-                >> beam.ParDo(ConvertTupledToDict())
-                | "Write to BigQuery"
-                >> WriteToBigQuery(
-                    options.output,
-                    schema=options.schema,
-                    write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE,
-                    create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
-                )
+        try:
+            # Verify if input file is supported input format
+            input_file = InputFormatSettings.model_validate(
+                {"filename": self.options.input}
             )
+
+            # Run the data pipeline with pipeline options.
+            with beam.Pipeline(options=self.options) as pipeline:
+                if re.match(".*\.csv$", input_file.filename):
+                    read_stage = pipeline | "Read CSV" >> ReadFromCsv(
+                        input_file.filename
+                    )
+                elif re.match(".*(json|txt)$", input_file.filename):
+                    read_stage = pipeline | "Read JSON" >> ReadFromJson(
+                        input_file.filename
+                    )
+                elif re.match(".*\.parquet$", input_file.filename):
+                    read_stage = pipeline | "Read Parquet" >> ReadFromParquet(
+                        input_file.filename
+                    )
+
+                (
+                    read_stage
+                    | "Change all data types into string"
+                    >> beam.ParDo(ConvertTupledToDict())
+                    | "Write to BigQuery"
+                    >> WriteToBigQuery(
+                        options.output,
+                        schema=options.schema,
+                        write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE,
+                        create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
+                    )
+                )
+        except ValidationError as e:
+            print(f"Unsupported input format: {e.errors}")
 
 
 if __name__ == "__main__":

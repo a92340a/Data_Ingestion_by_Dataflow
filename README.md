@@ -47,8 +47,8 @@ Destination table in BigQuery
 ## How to use
 ### 1. Environment variables
 ```
-export DATAFLOW_REGION=asia-east1
 export PROJECT_ID=tw-rd-de-data-solution
+export DATAFLOW_REGION=asia-east1
 export BUCKET_NAME=solution-data-ingestion-by-dataflow
 export DATASET_NAME=solution_data_ingestion_by_dataflow
 ```

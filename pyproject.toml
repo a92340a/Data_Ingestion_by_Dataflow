@@ -10,6 +10,7 @@ python = "^3.10"
 wheel = "^0.44.0"
 google-auth = "^2.34.0"
 apache-beam = {extras = ["dataframe", "gcp"], version = "^2.58.1"}
+pydantic = "^2.8.2"
 
 
 [build-system]
