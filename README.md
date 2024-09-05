@@ -3,8 +3,8 @@ Using Apache Beam to custom Dataflow ingestion service.
 
 ## Scenario
 Ingesting files, changing all data types into string and writing into BigQuery.
-1. A simple use case with direct deployment: running Apache beam data pipeline without templates
-2. A complete use case with custom template deployment: running Apache beam data pipeline with custom flex templates
+1. [A simple use case](/without_template_pipeline/) with direct deployment: running Apache beam data pipeline without templates
+2. [A complete use case](/custom_template_pipeline_csv/) with custom template deployment: running Apache beam data pipeline with custom flex templates
 
 
 ## Environment configuration
