@@ -31,7 +31,8 @@ gcloud auth application-default login
 
 
 ## Output results
-1. Dataflow job detail
-![dataflow_demo](images/dataflow_demo.jpg)
+1. Dataflow job and detail
+![dataflow_job](images/dataflow_job_demo.jpg)
+![dataflow_job_detail](images/dataflow_demo.jpg)
 2. BigQuery data preview
 ![bigquery_demo](images/bigquery_demo.jpg)

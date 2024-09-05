@@ -65,7 +65,7 @@ gcloud dataflow flex-template build gs://$BUCKET_NAME/template/custom_template_t
     --project $PROJECT_ID
 ```
 
-### 5. Using command line to execute data pipeline with custom flex template
+### 5-1. Using command line to execute data pipeline with custom flex template
 Parameters desctiption:
 - project: Your project id (set by 'PROJECT_ID')
 - region: The region your pipeline service built in (set by 'DATAFLOW_REGION')
@@ -87,4 +87,9 @@ gcloud dataflow flex-template run "custom-pipeline-to-bigquery-`date +%Y%m%d-%H%
     --parameters schemaJSONPath=gs://solution-data-ingestion-by-dataflow/template/schema.json \
     --parameters isTruncate=true
 ```
-
+### 5-2. Using GCP Dataflow console to execute data pipeline with custom flex template
+1. Create job from template
+2. Use custom template to create job
+![dataflow_create_job_1](/images/dataflow_create_job_1.jpg)
+![dataflow_create_job_1](/images/dataflow_create_job_2.jpg)
+*Note: if there is an error about no projectId, please use [command line method (5-1)](#5-1-using-command-line-to-execute-data-pipeline-with-custom-flex-template) instead.

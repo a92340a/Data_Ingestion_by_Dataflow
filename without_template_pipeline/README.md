@@ -47,7 +47,7 @@ Parameters description:
 - input: Your source file path
 - output: BigQuery table name compiled with 'dataset.table' or 'project:dataset.table' pattern
 - schema (optional): BigQuery table schema compiled with 'column1:datatype1,column2:datatyp2e' pattern
-- runner: 'DataflowRunner' (more info: https://beam.apache.org/get-started/wordcount-example/#direct-runner)
+- runner: 'DirectRunner' (default), 'DataflowRunner' and other distributed system (more info: https://beam.apache.org/get-started/wordcount-example/#direct-runner)
 - temp_location: Your data staging location as processing transformation
 
 Example deployment command for CSV ingestion:
