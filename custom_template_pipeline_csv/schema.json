@@ -1,0 +1,6 @@
+[
+    {"name": "ID", "type": "STRING", "mode": "NULLABLE"},
+    {"name": "Name", "type": "STRING", "mode": "NULLABLE"},
+    {"name": "Date", "type": "STRING", "mode": "NULLABLE"},
+    {"name": "Value", "type": "STRING", "mode": "NULLABLE"}
+]

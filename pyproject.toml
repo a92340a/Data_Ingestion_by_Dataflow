@@ -11,6 +11,8 @@ wheel = "^0.44.0"
 google-auth = "^2.34.0"
 apache-beam = {extras = ["dataframe", "gcp"], version = "^2.58.1"}
 pydantic = "^2.8.2"
+google-cloud-storage = "^2.18.2"
+argparse = "^1.4.0"
 
 
 [build-system]

@@ -1,0 +1,56 @@
+{
+    "name": "Cloud Storage CSV to BigQuery",
+    "description": "This template loads CSV files from a Cloud Storage bucket into a BigQuery table.",
+    "parameters": [
+        {
+            "name": "inputFilePath",
+            "label": "GCS input Path",
+            "helpText": "GCS location pattern for input CSV files (e.g., gs://your-bucket/source/*.csv).",
+            "regexes": [
+              "^gs://.*"
+            ]
+        },
+        {
+            "name": "outputTable",
+            "label": "Output BigQuery Table",
+            "helpText": "The BigQuery table spec where the CSV data will be loaded (e.g., your-project:your_dataset.your_table).",
+            "regex": [
+                    "[^:]+:[^.]+[.].+"
+                ]
+        },
+        {
+            "name": "schemaJSONPath",
+            "label": "JSON file with table schema in GCS Path",
+            "helpText": "GCS path to a JSON file that defines the mapping of CSV data to BigQuery columns (e.g., gs://your-bucket/schema/*.json).",
+            "regexes": [
+              "^gs://.*"
+            ]
+        },
+        {
+            "name": "chunkSize",
+            "label": "Number of lines to read from the file per chunk.",
+            "helpText": "Number of lines to read from the file per chunk. Defaults to: 5000.",
+            "isOptional": true
+        },
+        {
+            "name": "csvFileEncoding",
+            "label": "CSV file encoding",
+            "helpText": "The CSV file character encoding format. Allowed Values are US-ASCII, ISO-8859-1, UTF-8, UTF-16, UTF-8-SIG and BIG5. Defaults to: UTF-8.",
+            "isOptional": true,
+            "regexes": [
+              "^(us-ascii|iso-8859-1|utf-8|utf-16|utf-8-sig|big5)$"
+            ],
+            "defaultValue": "utf-8"
+        },
+        {
+            "name": "isTruncate",
+            "label": "Whether the table is needed to truncate.",
+            "helpText": "Whether the table is needed to truncate. Defaults to: false.",
+            "isOptional": true,
+            "regexes": [
+              "^(true|false)$"
+            ],
+            "defaultValue": "false"
+        }
+    ]
+}
